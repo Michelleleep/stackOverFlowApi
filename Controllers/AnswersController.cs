@@ -1,6 +1,8 @@
 using stackOverFlowApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using stackoverflowapi;
+using stackOverFlowApi.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace stackOverFlowApi.Controllers
 {
@@ -23,5 +25,20 @@ namespace stackOverFlowApi.Controllers
       context.SaveChanges();
       return entry;
     }
+
+    [HttpPut("{id}")]
+
+    public ActionResult<Answers> UpDateLike(int id, [FromBody] Answers Update)
+    {
+      if (id != Update.Id)
+      {
+        return BadRequest();
+      }
+
+      context.Entry(Update).State = EntityState.Modified; context.SaveChanges();
+      return Update;
+    }
+
+
   }
 }
